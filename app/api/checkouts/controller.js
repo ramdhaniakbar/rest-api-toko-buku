@@ -24,20 +24,20 @@ module.exports = {
 
 			for (let i = 0; i < payload.length; i++) {
 				const checkingBook = await Book.findOne({
-					where: { id: payload[i].bookId, user: user },
+					where: { id: payload[i]?.bookId, user: user },
 				})
 
 				// add field create detail transaction
 				payload[i].transaction = transaction.id
 				payload[i].user = user
-				payload[i].book = checkingBook.id
+				payload[i].book = checkingBook?.id
 				payload[i].titleBook = checkingBook?.title
 				payload[i].imageBook = checkingBook?.image
 				payload[i].priceBook = checkingBook?.price
 
 				updateStock.push({
 					id: payload[i].bookId,
-					stock: checkingBook?.stock - payload[i].quantity,
+					stock: checkingBook?.stock - payload[i]?.quantity,
 					user: user,
 				})
 
@@ -66,6 +66,9 @@ module.exports = {
 				})
 			}
 
+			console.log(payload)
+			console.log(updateStock)
+
 			await Book.bulkCreate(
 				updateStock,
 				{
@@ -73,6 +76,8 @@ module.exports = {
 				},
 				{ transaction: t }
 			)
+
+			console.log(payload)
 
 			const detailTransaction = await DetailTransaction.bulkCreate(payload, {
 				transaction: t,
