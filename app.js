@@ -8,6 +8,7 @@ const authRouter = require("./app/api/auth/routes")
 const categoriesRouter = require("./app/api/categories/routes")
 const booksRouter = require("./app/api/books/routes")
 const uploadsRouter = require("./app/api/uploads/routes")
+const checkoutsRouter = require("./app/api/checkouts/routes")
 const URL = `/api/v1`
 
 const app = express()
@@ -25,5 +26,6 @@ app.use(`${URL}`, authRouter)
 app.use(`${URL}`, categoriesRouter)
 app.use(`${URL}`, booksRouter)
 app.use(`${URL}`, uploadsRouter)
+app.use(`${URL}`, checkoutsRouter)
 
 module.exports = app
